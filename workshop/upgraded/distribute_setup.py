@@ -19,7 +19,7 @@ import time
 import fnmatch
 import tempfile
 import tarfile
-from distutils import log
+ # Removed distutils dependency
 
 try:
     from site import USER_SITE
@@ -87,29 +87,7 @@ def _install(tarball):
     finally:
         os.chdir(old_wd)
 
-
-def _build_egg(egg, tarball, to_dir):
-    # extracting the tarball
-    tmpdir = tempfile.mkdtemp()
-    log.warn('Extracting in %s', tmpdir)
-    old_wd = os.getcwd()
-    try:
-        os.chdir(tmpdir)
-        tar = tarfile.open(tarball)
-        _extractall(tar)
-        tar.close()
-
-        # going in the directory
-        subdir = os.path.join(tmpdir, os.listdir(tmpdir)[0])
-        os.chdir(subdir)
-        log.warn('Now working in %s', subdir)
-
-        # building an egg
-        log.warn('Building a Distribute egg in %s', to_dir)
-        _python_cmd('setup.py', '-q', 'bdist_egg', '--dist-dir', to_dir)
-
-    finally:
-        os.chdir(old_wd)
+ # Removed _install function to avoid distutils dependency
     # returning the result
     log.warn(egg)
     if not os.path.exists(egg):
